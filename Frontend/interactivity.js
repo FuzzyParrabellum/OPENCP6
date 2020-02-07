@@ -166,24 +166,17 @@ BestRA.addEventListener("click", async function() {
     let page_3 = movies_idx35[2];
     let page_4 = movies_idx35[3];
     let page_5 = movies_idx35[4];
-    // let page_6
-    // let page_7
-    let full_movie_index = []
-    for (Fivemovie in movies_idx35) {
-        for (movie in Fivemovie) {
-            full_movie_index.push(movie)
-        }
-    }
-    console.log("full_movie_index is " + full_movie_index)
-    console.log("page1 is " + page_1)
-    console.log("page_1[0] is " + page_1[0])
-    console.log('le type de page_1 est ' + (typeof page_1))
-    console.log("page_2 is " + page_2)
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
     if (BestRatedPage === 0) {
         console.log("le if marche")
         // boucle for pour les 7 img a retrieve (peut être comprise dans une fonction0)
-        for (img_id in full_movie_index.slice(0, 7)) {
+        for (index = 0; index < other_full_movies.slice(0, 7).length; index++) {
             
+            img_id = other_full_movies.slice(8, 15)[index]
             // IMPORTANT ne pas oublier de mettre un try / catch
             // fonction1 permettant de fetch les url d'une img en fonction de son id
             const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
@@ -192,6 +185,17 @@ BestRA.addEventListener("click", async function() {
             // fonction 2 permettant de remplacer les attributs de chaque img d'une div par un autre attribut, càd une
             // url par une autre
             console.log(img_url)
+            let current_imgs = document.querySelectorAll('#' +divBestMovieId+' img')
+            let current_img_id = current_imgs[index].id
+            console.log("current_img_id est: " + current_img_id)
+            console.log("img_id est avant chgmt: " + img_id)
+            // doit maintenant remplacer les attributs existants par les nouveaux
+            document.getElementById(current_img_id).src=`${img_url}`
+            document.getElementById(current_img_id).id=`${img_id}`
+
+            
+            console.log("son nouvel id est " + current_imgs[index].id)
+            
         }
         
     } else if (BestRatedPage === 1) {
@@ -281,38 +285,91 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
         return fetching
 }
 
+// conseils Arsène : créer modale avec visibility hidden
+// après le fetch, remplir la modale puis changer la visibility en true 
 
-// Le Code pour ouvrir une fenêtre modale pour le meilleur film
-var modal = document.getElementById("modalBestMovie");
+// Le Code pour ouvrir une fenêtre modale du meilleur film en cliquant sur le bouton play
+// var modal = document.getElementById("modalBestMovie");
 
-var btn = document.getElementById("BMPlayButton");
+// var btn = document.getElementById("BMPlayButton");
 
-var span = document.getElementsByClassName("close")[0];
+// var spanClose = document.getElementsByClassName("close")[0];
 
-btn.onclick = function() {
-    modal.style.display = "block";
-  }
+// btn.onclick = function() {
+//     modal.style.display = "block";
+//   }
 
-span.onclick = function() {
-    modal.style.display = "none";
-  }
+// spanClose.onclick = function() {
+//     modal.style.display = "none";
+//   }
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
+// window.onclick = function(event) {
+//     if (event.target == modal) {
+//       modal.style.display = "none";
+//     }
+//   }
 
-let fillModalWindow = function(divToChange, img, title, genre, release_date, rated, imdb, director, 
+
+let fillModalWindow = function(divToFill, img, title, genre, release_date, rated, imdb, director, 
                                actor, time, country, box_office, description) {
     // prendre l'id du film dans les attributs du film qu'on va getElementById
     // fetch les infos du films demandées : année, score imdb, acteurs, réal, etc.
     // afficher ces infos dans la fenêtre modale
+    let show_img = document.createElement("img");
+    let show_title = document.createElement("p");
+    let show_genre = document.createElement("p");
+    let show_release = document.createElement("p");
+    let show_rated = document.createElement("p");
+    let show_imdb = document.createElement("p");
+    let show_director = document.createElement("p");
+    let show_actor = document.createElement("p");
+    let show_time = document.createElement("p");
+    let show_country = document.createElement("p");
+    let show_box_office = document.createElement("p");
+    let show_description = document.createElement("p");
+
+    show_img.setAttribute("src", img);
+    show_img.setAttribute("class", "modal_img")
+    show_title.setAttribute("class", "modal_title")
+    show_title.innerHTML = title.toUpperCase();
+    show_genre.innerHTML = "Genre(s): " + genre;
+    show_release.innerHTML = "Release: " + release_date;
+    show_rated.innerHTML = "Rated: " + rated;
+    show_imdb.innerHTML = "Imdb_score: " + imdb;
+    show_director.innerHTML = "Director(s): " + director;
+    show_actor.innerHTML = "Actor(s): " + actor;
+    show_time.innerHTML = "Duration: " + time + " min";
+    show_country.innerHTML = "Countr(y)(ies): " + country;
+    show_box_office.innerHTML = "Box-office: " + box_office;
+    show_description.innerHTML = "Description: " + description;
+
+    let infoDiv = document.createElement("div")
+    infoDiv.setAttribute("class", "infoText")
+    divToFill.appendChild(show_title);
+    divToFill.appendChild(show_img);
+    divToFill.appendChild(infoDiv)
+    infoDiv.appendChild(show_genre);
+    infoDiv.appendChild(show_release);
+    infoDiv.appendChild(show_rated);
+    infoDiv.appendChild(show_imdb);
+    infoDiv.appendChild(show_director);
+    infoDiv.appendChild(show_actor);
+    infoDiv.appendChild(show_time);
+    infoDiv.appendChild(show_country);
+    infoDiv.appendChild(show_box_office);
+    infoDiv.appendChild(show_description);
+    // divToFill.appendChild(show_genre);
+    // divToFill.appendChild(show_release);
+    // divToFill.appendChild(show_rated);
+    // divToFill.appendChild(show_imdb);
+    // divToFill.appendChild(show_director);
+    // divToFill.appendChild(show_actor);
+    // divToFill.appendChild(show_time);
+    // divToFill.appendChild(show_country);
+    // divToFill.appendChild(show_box_office);
+    // divToFill.appendChild(show_description);
 }
 
-let fillBestMovieModal = function() {
-
-}
 
 // Event listener permettant d'effectuer une action quand une l'img d'un film est cliquée
 document.addEventListener("click", ImgClickListener);
@@ -333,7 +390,7 @@ async function ImgClickListener(event) {
         //infos img de la pochette du film, titre du film, genre complet, date de sortie,
         //son Rated, son score Imdb, son réalisateur, la liste des acteurs, sa durée, le pays d'origine,
         //le résultat au box-office, le résumé du film
-        let img_to_show_url = data.url
+        let img_to_show_url = data.image_url
         let title = data.original_title
         let genre = data.genres
         let release_date = data.date_published
@@ -345,18 +402,6 @@ async function ImgClickListener(event) {
         let country = data.countries
         let box_office = data.worldwide_gross_income
         let short_description = data.description
-        console.log(img_to_show_url)
-        console.log(title)
-        console.log(genre)
-        console.log(release_date)
-        console.log(the_rated)
-        console.log(imdb)
-        console.log(director)
-        console.log(actor_list)
-        console.log(time)
-        console.log(country)
-        console.log(box_office)
-        console.log(short_description)
 
         // Créer une fenêtre modale avec ces différentes infos
         // je pense qu'a l'intérieur de la div avec la classe modale, il faut ensuite créer un div
@@ -370,18 +415,89 @@ async function ImgClickListener(event) {
         // ici petit test pour voir si une fenêtre modale s'ouvre bien et peut se fermer dès
         // qu'on clique sur une image
         let modal_test1 = document.createElement("span")
-        modal_test1.setAttribute("class", "modalContent")
+        modal_test1.setAttribute("class", "close")
         modal_test1.innerHTML = "&times;"
         let modal_test2 = document.createElement("p")
-        modal_test2.innerHTML = "le texte dans la modale"
+        modal_test2.innerHTML = ""
         modal_content.appendChild(modal_test1)
         modal_content.appendChild(modal_test2)
         let test_div = document.getElementById(divBestMovieId)
         test_div.appendChild(new_modal)
+
+        // On remplit la fenêtre modale avec les informations du film
+        fillModalWindow(modal_content, img_to_show_url, title, genre, release_date, the_rated, imdb, 
+            director, actor_list, time, country, box_office, short_description)
         // pour réaliser le test il faut encore faire du code javascript pr faire apparaitre 
         // et disparaître modale (voir au-dessus)
+        new_modal.style.display = "block"; // apparement cette ligne n'est pas nécessaire
+        modal_test1.onclick = function() {
+            new_modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == new_modal) {
+              new_modal.style.display = "none";
+            }
+          } 
+    // La condition suivante permet d'afficher une fenêtre modale pour le meilleur film quand on
+    // clique sur le bouton "Play"
+    } else if (element.innerHTML == "Play") {
+        console.log("button was pressed")
+        let BestMovieImg = document.querySelector("#BestMovie img")
+        img_id = BestMovieImg.getAttribute("id")
+        console.log(img_id)
+        res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`)
+        data = await res.json()
+        //infos img de la pochette du film, titre du film, genre complet, date de sortie,
+        //son Rated, son score Imdb, son réalisateur, la liste des acteurs, sa durée, le pays d'origine,
+        //le résultat au box-office, le résumé du film
+        let img_to_show_url = data.image_url
+        let title = data.original_title
+        let genre = data.genres
+        let release_date = data.date_published
+        let the_rated = data.rated
+        let imdb = data.imdb_score
+        let director = data.directors
+        let actor_list = data.actors
+        let time = data.duration
+        let country = data.countries
+        let box_office = data.worldwide_gross_income
+        let short_description = data.description
 
-        // append enfin la fenêtre modale au document
-        // afficher la fenêtre modale
+        // Créer une fenêtre modale avec ces différentes infos
+        // je pense qu'a l'intérieur de la div avec la classe modale, il faut ensuite créer un div
+        // avec la classe modalContent
+        let new_modal = document.createElement("div")
+        new_modal.setAttribute("class", "modal")
+        let modal_content = document.createElement("div")
+        modal_content.setAttribute("class", "modalContent")
+        new_modal.appendChild(modal_content)
+
+        // ici petit test pour voir si une fenêtre modale s'ouvre bien et peut se fermer dès
+        // qu'on clique sur une image
+        let modal_test1 = document.createElement("span")
+        modal_test1.setAttribute("class", "close")
+        modal_test1.innerHTML = "&times;"
+        let modal_test2 = document.createElement("p")
+        modal_test2.innerHTML = ""
+        modal_content.appendChild(modal_test1)
+        modal_content.appendChild(modal_test2)
+        let test_div = document.getElementById(divBestMovieId)
+        test_div.appendChild(new_modal)
+
+        // On remplit la fenêtre modale avec les informations du film
+        fillModalWindow(modal_content, img_to_show_url, title, genre, release_date, the_rated, imdb, 
+            director, actor_list, time, country, box_office, short_description)
+        // pour réaliser le test il faut encore faire du code javascript pr faire apparaitre 
+        // et disparaître modale (voir au-dessus)
+        new_modal.style.display = "block";
+        modal_test1.onclick = function() {
+            new_modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == new_modal) {
+              new_modal.style.display = "none";
+            }
+          } 
+        
     } 
 }
