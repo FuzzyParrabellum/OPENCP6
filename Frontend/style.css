@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: white;
+}
+
+nav {
+    display: flex;
+    border: 3px solid white;
+    border-radius: 5px;
+    
+}
+
+body {
+    background-color: grey;
+}
+
+.inline-banner {
+    display: inline-block;
+    width: 15%;
+    height: 100px;
+    padding: 20px 50px;
+}
+
+h1.inline-banner {
+    width: 60%;
+    background-color: orange;
+    float: right; 
+    text-align: right;
+    
+}
+
+.list {
+    display: flex;
+    border: 3px solid white;
+    justify-content: space-around;
+    height: 200px;
+}
+
+#BestMovie {
+    border: 3px solid white;
+    background-color: teal;
+    height: 400px;
+    display: flex;
+}
+
+.MovieInformations {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.MovieTitle {
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: large;
+    letter-spacing: 0.5em;
+    word-spacing: 0.3em;
+}
+
+.PlayButton {
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    border: 3px solid white;
+    border-radius: 10px;
+    width: 20%;
+}
+
+.movie {
+    min-height: 100%;
+    min-width: 200px;
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.list-title {
+    padding: 10px;
+}
+
+footer {
+    border: 3px solid white;
+    background-color: yellow;
+    height: 200px;
+    display: flex;
+}
