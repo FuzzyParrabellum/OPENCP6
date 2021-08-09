@@ -6,6 +6,7 @@ let divBestAdventureId = 'bestAdventureList'
 let divBestHistoryId = 'bestHistoryList'
 let divBestComedyId = 'bestComedyList'
 let divFirstMovieId = 'BestMovie'
+let divTitleToChange = 'BestMovieTitle'
 
 // Le nombre de films à retourner par catégorie
 const NumMoviesToShow = 7
@@ -102,10 +103,18 @@ let retrieveFirstMovie = function (url, div, genre='') {
             })
             .then(data => {
                 let movie_id = data.results[0].id
+                let movie_title = data.results[0].title
+                titleToChange = document.getElementsByClassName(divTitleToChange)
+                console.log(titleToChange)
+                console.log(titleToChange.innerHTML)
+                titleToChange.innerHTML = movie_title
+                console.log(titleToChange)
+                console.log(titleToChange.innerHTML)
                 let img_url = data.results[0].image_url
                 let new_img = document.createElement("img")
                 new_img.setAttribute("id", movie_id)
                 new_img.setAttribute("src", img_url)
+                new_img.setAttribute("width", '300px')
                 divToChange.appendChild(new_img)
             })
             .catch((err) => {
@@ -130,4 +139,5 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => fetch_movies('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', divBestComedyId, NumMoviesToShow, '&genre=Comedy'), 2500)
     
 })
+
 
