@@ -3,9 +3,9 @@
 <html>
     <head>
         <link href="./style.css" type="text/css" rel="stylesheet">
-        <script type="text/javascript" src="./interactivity.js">
         
-        </script> 
+        <script type="text/javascript" src="./interactivity.js"></script> 
+        <script src="https://kit.fontawesome.com/08fe269960.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header>
@@ -19,14 +19,18 @@
             <section>
                 <div id="BestMovie">
                     <div class="MovieInformations">
-                        <div class="BestMovieTitle"><h1>BestMovie Title</h1></div>
+                        <div class="BestMovieTitle"><h1 id="titleToReplace">BestMovie Title</h1></div>
                         <div class="PlayButton"><h2>Play</h2></div>
                     </div>
                 </div>
             </section>
             <section class="movie-list">
                 <h2 class="list-title">Best Rated Movies</h2>
-                <div class="list" id="bestMovieList">
+                <div class="list" >
+                    <div class="arrow">
+                        <div class="arrow-left"></div>
+                    </div>
+                    <div id="bestMovieList"></div>
                 </div>
             </section>
             <section class="movie-list">

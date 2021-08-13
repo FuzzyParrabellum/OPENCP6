@@ -6,7 +6,7 @@ let divBestAdventureId = 'bestAdventureList'
 let divBestHistoryId = 'bestHistoryList'
 let divBestComedyId = 'bestComedyList'
 let divFirstMovieId = 'BestMovie'
-let divTitleToChange = 'BestMovieTitle'
+let divTitleToChange = 'titleToReplace'
 
 // Le nombre de films à retourner par catégorie
 const NumMoviesToShow = 7
@@ -104,7 +104,7 @@ let retrieveFirstMovie = function (url, div, genre='') {
             .then(data => {
                 let movie_id = data.results[0].id
                 let movie_title = data.results[0].title
-                titleToChange = document.getElementsByClassName(divTitleToChange)
+                titleToChange = document.getElementById(divTitleToChange)
                 console.log(titleToChange)
                 console.log(titleToChange.innerHTML)
                 titleToChange.innerHTML = movie_title
