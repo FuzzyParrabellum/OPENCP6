@@ -1,0 +1,23 @@
+{
+  "name": "projet6",
+  "version": "1.0.0",
+  "description": "Projet 6 OpenClassrooms dev Python/Django",
+  "main": "interactivity.js",
+  "scripts": {
+    "test": "\"echo \\\"Error: no test specified\\\" && exit1\"",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FuzzyParrabellum/OPENCP6.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FuzzyParrabellum/OPENCP6/issues"
+  },
+  "homepage": "https://github.com/FuzzyParrabellum/OPENCP6#readme",
+  "devDependencies": {
+    "webpack-cli": "^4.8.0"
+  }
+}
