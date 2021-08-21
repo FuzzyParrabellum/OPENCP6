@@ -211,8 +211,8 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
         })
         .then(data => {
             let movies_img = [];
-            let addImg = function (imgToAdd) {
-                movies_img = [...movies_img, ...imgToAdd]
+            let addImg = function (imgToAdd, count) {
+                movies_img = [...movies_img, ...imgToAdd, count]
             }
             for (let counter = 0; counter < 5; counter++) {
                 let movie_components = []
@@ -220,7 +220,7 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
                 let img_url = data.results[counter].image_url
                 movie_components = [movie_id, img_url]
                 console.log("movie_compenents is " + movie_components)
-                addImg(movie_components);
+                addImg(movie_components, counter);
                 console.log("the counter is " + counter)
                 
                 console.log("movies_img is " + movies_img)
