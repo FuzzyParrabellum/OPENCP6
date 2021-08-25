@@ -181,6 +181,8 @@ BestRA.addEventListener("click", async function() {
 // }
 
 // Il faudrait que cette version de la fonction marche pour que retrieve35Movies soit appellée de la bonne façon
+// Cette version est sensée appeler retrieve35 movies 7 fois, une fois par page de 5 résultats, ce qui va donner
+// 35 résultats en tout.
 let fetch_movies_onClick = async function(url, genre='', pageNumber = 1) {
 
     full_list_of_img = []
@@ -212,13 +214,14 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
         .then(data => {
             let movies_img = [];
             let addImg = function (imgToAdd, count) {
-                movies_img = [...movies_img, ...imgToAdd, count]
+                let new_movies_img = [...movies_img, ...imgToAdd, count]
+                movies_img = new_movies_img
             }
             for (let counter = 0; counter < 5; counter++) {
                 let movie_components = []
                 let movie_id = data.results[counter].id
                 let img_url = data.results[counter].image_url
-                movie_components = [movie_id, img_url]
+                movie_components = [movie_id], [img_url]
                 console.log("movie_compenents is " + movie_components)
                 addImg(movie_components, counter);
                 console.log("the counter is " + counter)
