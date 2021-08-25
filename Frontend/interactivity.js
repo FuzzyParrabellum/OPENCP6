@@ -168,7 +168,14 @@ BestRA.addEventListener("click", async function() {
     let page_3 = movies_idx35[2];
     let page_4 = movies_idx35[3];
     let page_5 = movies_idx35[4];
-    let full_movie_index = [...page_1, ...page_2, ...page_3, ...page_4, ...page_5]
+    // let page_6
+    // let page_7
+    let full_movie_index = []
+    for (Fivemovie in movies_idx35) {
+        for (movie in Fivemovie) {
+            full_movie_index.push(movie)
+        }
+    }
     console.log("full_movie_index is " + full_movie_index)
     console.log("page1 is " + page_1)
     console.log("page_1[0] is " + page_1[0])
@@ -262,10 +269,6 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
         })
         .then(data => {
             let movies_img = [];
-            // let addImg = function (imgToAdd) {
-            //     let new_movies_img = movies_img.push(imgToAdd)
-            //     movies_img = new_movies_img
-            // }
             for (let counter = 0; counter < 5; counter++) {
                 let movie_id = data.results[counter].id
                 movies_img.push(movie_id);
