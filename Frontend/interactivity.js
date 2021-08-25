@@ -1,5 +1,8 @@
 
 // Les div à remplir par les images de films que l'on va retrieve via l'API OC-Movies, en effectuant
+
+
+
 // des query via fetch() qui nous retourneront l'url de ces images
 let divBestMovieId = 'bestMovieList'
 let divBestAdventureId = 'bestAdventureList'
@@ -20,6 +23,13 @@ let divComedyRightArrow = ''
 
 
 let BestRA = document.getElementById(divBestMovieRightArrow)
+
+// Le numéro de page sur lequel on est en fonction de chaque catégorie
+let BestRatedPage = 0
+let AdventurePage = 0
+let HistoryPage = 0
+let ComedyPage = 0
+
 
 // Le nombre de films à retourner par catégorie
 const NumMoviesToShow = 7
@@ -148,16 +158,56 @@ document.addEventListener("DOMContentLoaded", function() {
 // On ajoute des event Listener pour chaque flèche permettant de faire défiler les films
 BestRA.addEventListener("click", async function() {
     // il faut ici trouver un moyen de savoir sur quel page number on est
-    let new_movie_img = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '', 1)
-    console.log('new_movie_img is ' + new_movie_img)
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '', 1)
+    console.log('movies_idx35 is ' + movies_idx35)
+    console.log("its type is " + (typeof movies_idx35))
     // Dans un 1er temps, déplier la liste pour mettre les 35 films côte à côte genre de 0-34
-    all_movie_img = []
-    for (list_of_5_movies in new_movie_img) {
-        for (movie in list_of_5_movies) {
-            all_movie_img.push(movie)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let full_movie_index = [...page_1, ...page_2, ...page_3, ...page_4, ...page_5]
+    console.log("full_movie_index is " + full_movie_index)
+    console.log("page1 is " + page_1)
+    console.log("page_1[0] is " + page_1[0])
+    console.log('le type de page_1 est ' + (typeof page_1))
+    console.log("page_2 is " + page_2)
+    if (BestRatedPage === 0) {
+        console.log("le if marche")
+        // boucle for pour les 7 img a retrieve (peut être comprise dans une fonction0)
+        for (img_id in full_movie_index.slice(0, 7)) {
+            
+            // IMPORTANT ne pas oublier de mettre un try / catch
+            // fonction1 permettant de fetch les url d'une img en fonction de son id
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            // fonction 2 permettant de remplacer les attributs de chaque img d'une div par un autre attribut, càd une
+            // url par une autre
+            console.log(img_url)
         }
+        
+    } else if (BestRatedPage === 1) {
+
+    } else if (BestRatedPage === 2) {
+
+    } else if (BestRatedPage === 3) {
+
+    } else if (BestRatedPage === 4) {
+
     }
-    console.log(all_movie_img)
+    // En fonction de la page où on est, on affiche les bonnes images dans les div en remplaçant les url qui y sont déjà
+    // par les url qu'on va aller chercher avec les id que l'on a récupéré dans l'ordre
+
+
+
+
+
+
+
+    
     // suivant le page Number, on va prendre un bout de cette liste, qui va constituer les 7 images à afficher
     // pour chacune des 7 images affichées actuellement, càd chaque div, enfant de la div principale dans laquelle on opère,
     // on va changer deux attributs à l'image, son url et son id
@@ -188,7 +238,6 @@ let fetch_movies_onClick = async function(url, genre='', pageNumber = 1) {
     full_list_of_img = []
     for (let counter = 0; counter < 7; counter++) {
         list_of_img = await retrieve35Movies(url, genre, pageNumber);
-        console.log("the list of img is " + list_of_img)
         full_list_of_img.push(list_of_img)
         pageNumber++;
     }
@@ -213,20 +262,13 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
         })
         .then(data => {
             let movies_img = [];
-            let addImg = function (imgToAdd, count) {
-                let new_movies_img = [...movies_img, ...imgToAdd, count]
-                movies_img = new_movies_img
-            }
+            // let addImg = function (imgToAdd) {
+            //     let new_movies_img = movies_img.push(imgToAdd)
+            //     movies_img = new_movies_img
+            // }
             for (let counter = 0; counter < 5; counter++) {
-                let movie_components = []
                 let movie_id = data.results[counter].id
-                let img_url = data.results[counter].image_url
-                movie_components = [movie_id], [img_url]
-                console.log("movie_compenents is " + movie_components)
-                addImg(movie_components, counter);
-                console.log("the counter is " + counter)
-                
-                console.log("movies_img is " + movies_img)
+                movies_img.push(movie_id);
             }
             
             return movies_img
@@ -235,8 +277,6 @@ let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
             console.log("there is an error")
             console.log(err)
         })
-        console.log("fetching is" + fetching)
-        console.log("OH OH OH OH OH OH")
         return fetching
 }
 
