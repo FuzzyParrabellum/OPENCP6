@@ -1,8 +1,5 @@
 
 // Les div à remplir par les images de films que l'on va retrieve via l'API OC-Movies, en effectuant
-
-
-
 // des query via fetch() qui nous retourneront l'url de ces images
 let divBestMovieId = 'bestMovieList'
 let divBestAdventureId = 'bestAdventureList'
@@ -10,6 +7,7 @@ let divBestHistoryId = 'bestHistoryList'
 let divBestComedyId = 'bestComedyList'
 let divFirstMovieId = 'BestMovie'
 let divTitleToChange = 'titleToReplace'
+
 
 // Les div sur lesquelles l'utilisateur va cliquer
 let divBestMovieLeftArrow = ''
@@ -305,3 +303,85 @@ window.onclick = function(event) {
     }
   }
 
+let fillModalWindow = function(divToChange, img, title, genre, release_date, rated, imdb, director, 
+                               actor, time, country, box_office, description) {
+    // prendre l'id du film dans les attributs du film qu'on va getElementById
+    // fetch les infos du films demandées : année, score imdb, acteurs, réal, etc.
+    // afficher ces infos dans la fenêtre modale
+}
+
+let fillBestMovieModal = function() {
+
+}
+
+// Event listener permettant d'effectuer une action quand une l'img d'un film est cliquée
+document.addEventListener("click", ImgClickListener);
+
+async function ImgClickListener(event) {
+    var element = event.target;
+    if (element.tagName == "IMG"){
+        img_id = element.getAttribute("id");
+        // il faut ici trouver la position de l'image pour pouvoir afficher une fenêtre modale 
+        // dessus je pense
+        // position = element.getBoundingClientRect();
+        // console.log(rect.top, rect.right, rect.bottom, rect.left);
+        console.log(img_id)
+        // appeler ensuite une fonction fetch asynchrone pour récupérer les différentes infos 
+        // demandées par openclassroom 
+        res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`)
+        data = await res.json()
+        //infos img de la pochette du film, titre du film, genre complet, date de sortie,
+        //son Rated, son score Imdb, son réalisateur, la liste des acteurs, sa durée, le pays d'origine,
+        //le résultat au box-office, le résumé du film
+        let img_to_show_url = data.url
+        let title = data.original_title
+        let genre = data.genres
+        let release_date = data.date_published
+        let the_rated = data.rated
+        let imdb = data.imdb_score
+        let director = data.directors
+        let actor_list = data.actors
+        let time = data.duration
+        let country = data.countries
+        let box_office = data.worldwide_gross_income
+        let short_description = data.description
+        console.log(img_to_show_url)
+        console.log(title)
+        console.log(genre)
+        console.log(release_date)
+        console.log(the_rated)
+        console.log(imdb)
+        console.log(director)
+        console.log(actor_list)
+        console.log(time)
+        console.log(country)
+        console.log(box_office)
+        console.log(short_description)
+
+        // Créer une fenêtre modale avec ces différentes infos
+        // je pense qu'a l'intérieur de la div avec la classe modale, il faut ensuite créer un div
+        // avec la classe modalContent
+        let new_modal = document.createElement("div")
+        new_modal.setAttribute("class", "modal")
+        let modal_content = document.createElement("div")
+        modal_content.setAttribute("class", "modalContent")
+        new_modal.appendChild(modal_content)
+
+        // ici petit test pour voir si une fenêtre modale s'ouvre bien et peut se fermer dès
+        // qu'on clique sur une image
+        let modal_test1 = document.createElement("span")
+        modal_test1.setAttribute("class", "modalContent")
+        modal_test1.innerHTML = "&times;"
+        let modal_test2 = document.createElement("p")
+        modal_test2.innerHTML = "le texte dans la modale"
+        modal_content.appendChild(modal_test1)
+        modal_content.appendChild(modal_test2)
+        let test_div = document.getElementById(divBestMovieId)
+        test_div.appendChild(new_modal)
+        // pour réaliser le test il faut encore faire du code javascript pr faire apparaitre 
+        // et disparaître modale (voir au-dessus)
+
+        // append enfin la fenêtre modale au document
+        // afficher la fenêtre modale
+    } 
+}
