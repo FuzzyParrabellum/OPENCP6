@@ -1,32 +1,39 @@
 
 // Les div à remplir par les images de films que l'on va retrieve via l'API OC-Movies, en effectuant
 // des query via fetch() qui nous retourneront l'url de ces images
-let divBestMovieId = 'bestMovieList'
-let divBestAdventureId = 'bestAdventureList'
-let divBestHistoryId = 'bestHistoryList'
-let divBestComedyId = 'bestComedyList'
-let divFirstMovieId = 'BestMovie'
-let divTitleToChange = 'titleToReplace'
+let divBestMovieId = 'bestMovieList';
+let divBestAdventureId = 'bestAdventureList';
+let divBestHistoryId = 'bestHistoryList';
+let divBestComedyId = 'bestComedyList';
+let divFirstMovieId = 'BestMovie';
+let divTitleToChange = 'titleToReplace';
 
 
 // Les div sur lesquelles l'utilisateur va cliquer
-let divBestMovieLeftArrow = ''
-let divBestMovieRightArrow = "BestRatedAR";
-let divAdventureLeftArrow = ''
-let divAdventureRightArrow = ''
-let divHistoryLeftArrow = ''
-let divHistoryRightArrow = ''
-let divComedyLeftArrow = ''
-let divComedyRightArrow = ''
+let divBestMovieLeftArrow = 'BestRatedAL';
+let divBestMovieRightArrow = 'BestRatedAR';
+let divAdventureLeftArrow = 'BestAdventureAL';
+let divAdventureRightArrow = 'BestAdventureAR';
+let divHistoryLeftArrow = 'BestHistoryAL'
+let divHistoryRightArrow = 'BestHistoryAR'
+let divComedyLeftArrow = 'BestComedyAL'
+let divComedyRightArrow = 'BestComedyAR'
 
 
-let BestRA = document.getElementById(divBestMovieRightArrow)
+let BestRA = document.getElementById(divBestMovieRightArrow);
+let BestLA = document.getElementById(divBestMovieLeftArrow);
+let AdventureRA = document.getElementById(divAdventureRightArrow);
+let AdventureLA = document.getElementById(divAdventureLeftArrow);
+let HistoryRA = document.getElementById(divHistoryRightArrow);
+let HistoryLA = document.getElementById(divHistoryLeftArrow);
+let ComedyRA = document.getElementById(divComedyRightArrow);
+let ComedyLA = document.getElementById(divComedyLeftArrow);
 
-// Le numéro de page sur lequel on est en fonction de chaque catégorie
-let BestRatedPage = 0
-let AdventurePage = 0
-let HistoryPage = 0
-let ComedyPage = 0
+// Le numéro de page sur lequel on est en fonction de chaque catégorie de film
+let BestRatedPage = 0;
+let AdventurePage = 0;
+let HistoryPage = 0;
+let ComedyPage = 0;
 
 
 // Le nombre de films à retourner par catégorie
@@ -152,132 +159,6 @@ document.addEventListener("DOMContentLoaded", function() {
     setTimeout(() => fetch_movies('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', divBestComedyId, NumMoviesToShow, '&genre=Comedy'), 2500)
     
 })
-
-// On ajoute des event Listener pour chaque flèche permettant de faire défiler les films
-BestRA.addEventListener("click", async function() {
-    // il faut ici trouver un moyen de savoir sur quel page number on est
-    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '', 1)
-    console.log('movies_idx35 is ' + movies_idx35)
-    console.log("its type is " + (typeof movies_idx35))
-    // Dans un 1er temps, déplier la liste pour mettre les 35 films côte à côte genre de 0-34
-    
-    let page_1 = movies_idx35[0];
-    let page_2 = movies_idx35[1];
-    let page_3 = movies_idx35[2];
-    let page_4 = movies_idx35[3];
-    let page_5 = movies_idx35[4];
-    let page_6 = movies_idx35[5];
-    let page_7 = movies_idx35[6];
-    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
-                            ...page_5, ...page_6, ...page_7]
-
-    if (BestRatedPage === 0) {
-        console.log("le if marche")
-        // boucle for pour les 7 img a retrieve (peut être comprise dans une fonction0)
-        for (index = 0; index < other_full_movies.slice(0, 7).length; index++) {
-            
-            img_id = other_full_movies.slice(8, 15)[index]
-            // IMPORTANT ne pas oublier de mettre un try / catch
-            // fonction1 permettant de fetch les url d'une img en fonction de son id
-            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
-            const img_url_json = await img_url_res.json();
-            const img_url = img_url_json.image_url
-            // fonction 2 permettant de remplacer les attributs de chaque img d'une div par un autre attribut, càd une
-            // url par une autre
-            let current_imgs = document.querySelectorAll('#' +divBestMovieId+' img')
-            // doit maintenant remplacer les attributs existants par les nouveaux
-            // MAIS et c'est important pour le meilleur film placé tout en haut, il faut uniquement remplacer les url
-            // et id des img quand celles-ci sont dans la bonne liste de div
-            current_imgs[index].src=`${img_url}`
-            current_imgs[index].id=`${img_id}`
-        }
-        
-    } else if (BestRatedPage === 1) {
-
-    } else if (BestRatedPage === 2) {
-
-    } else if (BestRatedPage === 3) {
-
-    } else if (BestRatedPage === 4) {
-
-    }
-    // En fonction de la page où on est, on affiche les bonnes images dans les div en remplaçant les url qui y sont déjà
-    // par les url qu'on va aller chercher avec les id que l'on a récupéré dans l'ordre
-
-
-
-
-
-
-
-    
-    // suivant le page Number, on va prendre un bout de cette liste, qui va constituer les 7 images à afficher
-    // pour chacune des 7 images affichées actuellement, càd chaque div, enfant de la div principale dans laquelle on opère,
-    // on va changer deux attributs à l'image, son url et son id
-    // Donc boucle for qui compare chaque div avec chaque nouvelle image et qui change les propriétés
-
-})
-
-// // Fonction permettant de fetch de nouveaux films après qu'on ai click sur une flèche
-// let fetch_movies_onClick = function(url, genre='', pageNumber = 1) {
-
-//     full_list_of_img = []
-//     for (let counter = 0; counter < 7; counter++) {
-//         list_of_img = setTimeout(() => retrieve35Movies(url, genre, pageNumber), 500);
-//         console.log("the list of img is " + list_of_img)
-//         full_list_of_img.push(list_of_img)
-//         pageNumber++;
-//     }
-//     // console.log(full_list_of_img[0])
-//     // console.log(full_list_of_img[0][0])
-    
-// }
-
-// Il faudrait que cette version de la fonction marche pour que retrieve35Movies soit appellée de la bonne façon
-// Cette version est sensée appeler retrieve35 movies 7 fois, une fois par page de 5 résultats, ce qui va donner
-// 35 résultats en tout.
-let fetch_movies_onClick = async function(url, genre='', pageNumber = 1) {
-
-    full_list_of_img = []
-    for (let counter = 0; counter < 7; counter++) {
-        list_of_img = await retrieve35Movies(url, genre, pageNumber);
-        full_list_of_img.push(list_of_img)
-        pageNumber++;
-    }
-    return full_list_of_img
-    
-}
-
-
-// Fonction permettant de fetch 5 autres films après un clic sur une flèche sur le coté d'une catégorie
-let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
-    console.log("retieve35Movies is called");
-    var url = url + "?page=" + pageNumber + "&sort_by=-imdb_score" + genre
-    let fetching = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-            }
-        })
-        .then(res => {
-            return res.json()
-        })
-        .then(data => {
-            let movies_img = [];
-            for (let counter = 0; counter < 5; counter++) {
-                let movie_id = data.results[counter].id
-                movies_img.push(movie_id);
-            }
-            
-            return movies_img
-        })
-        .catch((err) => {
-            console.log("there is an error")
-            console.log(err)
-        })
-        return fetching
-}
 
 // conseils Arsène : créer modale avec visibility hidden
 // après le fetch, remplir la modale puis changer la visibility en true 
@@ -494,4 +375,351 @@ async function ImgClickListener(event) {
           } 
         
     } 
+}
+
+
+// On ajoute des event Listener pour chaque flèche permettant de faire défiler les films
+BestRA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_right_click(other_full_movies, BestRatedPage, divBestMovieId);
+    BestRatedPage++; 
+})
+
+BestLA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_left_click(other_full_movies, BestRatedPage, divBestMovieId);
+    BestRatedPage--; 
+})
+
+AdventureRA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=Adventure', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_right_click(other_full_movies, AdventurePage, divBestAdventureId);
+    AdventurePage++; 
+})
+
+AdventureLA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=Adventure', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_left_click(other_full_movies, AdventurePage, divBestAdventureId);
+    AdventurePage--; 
+})
+
+HistoryRA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=History', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_right_click(other_full_movies, HistoryPage, divBestHistoryId);
+    HistoryPage++; 
+})
+
+HistoryLA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=History', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_left_click(other_full_movies, HistoryPage, divBestHistoryId);
+    HistoryPage--; 
+})
+
+ComedyRA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=Comedy', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_right_click(other_full_movies, ComedyPage, divBestComedyId);
+    ComedyPage++; 
+})
+
+ComedyLA.addEventListener("click", async function() {
+    // il faut ici trouver un moyen de savoir sur quel page number on est
+    let movies_idx35 = await fetch_movies_onClick('http://localhost:8000/api/v1/titles/', '&genre=Comedy', 1)
+    
+    let page_1 = movies_idx35[0];
+    let page_2 = movies_idx35[1];
+    let page_3 = movies_idx35[2];
+    let page_4 = movies_idx35[3];
+    let page_5 = movies_idx35[4];
+    let page_6 = movies_idx35[5];
+    let page_7 = movies_idx35[6];
+    let other_full_movies = [...page_1, ...page_2, ...page_3, ...page_4,
+                            ...page_5, ...page_6, ...page_7]
+
+    change_img_on_left_click(other_full_movies, ComedyPage, divBestComedyId);
+    ComedyPage--; 
+})
+
+let change_img_on_right_click = async function(movies_list, pageCountDiv, divToAlterImgs) {
+    if (pageCountDiv === 0) {
+        console.log("le if marche")
+        // boucle for pour les 7 img a retrieve (peut être comprise dans une fonction0)
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(7, 14)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+
+    } else if (pageCountDiv === 1) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(14, 21)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+        
+    } else if (pageCountDiv === 2) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(21, 28)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+
+    } else if (pageCountDiv === 3) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(28, 35)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+    } else if (pageCountDiv === 4) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(0, 7)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+    }
+}
+
+let change_img_on_left_click = async function(movies_list, pageCountDiv, divToAlterImgs) {
+    if (pageCountDiv === 0) {
+        console.log("le if marche")
+        // boucle for pour les 7 img a retrieve (peut être comprise dans une fonction0)
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(28, 35)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+
+    } else if (pageCountDiv === 1) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(0, 7)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+        
+    } else if (pageCountDiv === 2) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(7, 14)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+
+    } else if (pageCountDiv === 3) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(14, 21)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+    } else if (pageCountDiv === 4) {
+        for (index = 0; index < movies_list.slice(0, 7).length; index++) {
+            
+            let img_id = movies_list.slice(21, 28)[index]
+            
+            const img_url_res = await fetch(`http://localhost:8000/api/v1/titles/${img_id}`);
+            const img_url_json = await img_url_res.json();
+            const img_url = img_url_json.image_url
+            
+            let current_imgs = document.querySelectorAll('#' +divToAlterImgs+' img')
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
+        }
+        
+    }
+}
+// Il faudrait que cette version de la fonction marche pour que retrieve35Movies soit appellée de la bonne façon
+// Cette version est sensée appeler retrieve35 movies 7 fois, une fois par page de 5 résultats, ce qui va donner
+// 35 résultats en tout.
+let fetch_movies_onClick = async function(url, genre='', pageNumber = 1) {
+
+    full_list_of_img = []
+    for (let counter = 0; counter < 7; counter++) {
+        list_of_img = await retrieve35Movies(url, genre, pageNumber);
+        full_list_of_img.push(list_of_img)
+        pageNumber++;
+    }
+    return full_list_of_img
+    
+}
+
+
+// Fonction permettant de fetch 5 autres films après un clic sur une flèche sur le coté d'une catégorie
+let retrieve35Movies = async function (url, genre='', pageNumber = 1) {
+    console.log("retieve35Movies is called");
+    var url = url + "?page=" + pageNumber + "&sort_by=-imdb_score" + genre
+    let fetching = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+            }
+        })
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            let movies_img = [];
+            for (let counter = 0; counter < 5; counter++) {
+                let movie_id = data.results[counter].id
+                movies_img.push(movie_id);
+            }
+            
+            return movies_img
+        })
+        .catch((err) => {
+            console.log("there is an error")
+            console.log(err)
+        })
+        return fetching
 }
