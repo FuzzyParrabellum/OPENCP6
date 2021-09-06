@@ -184,18 +184,12 @@ BestRA.addEventListener("click", async function() {
             const img_url = img_url_json.image_url
             // fonction 2 permettant de remplacer les attributs de chaque img d'une div par un autre attribut, càd une
             // url par une autre
-            console.log(img_url)
             let current_imgs = document.querySelectorAll('#' +divBestMovieId+' img')
-            let current_img_id = current_imgs[index].id
-            console.log("current_img_id est: " + current_img_id)
-            console.log("img_id est avant chgmt: " + img_id)
             // doit maintenant remplacer les attributs existants par les nouveaux
-            document.getElementById(current_img_id).src=`${img_url}`
-            document.getElementById(current_img_id).id=`${img_id}`
-
-            
-            console.log("son nouvel id est " + current_imgs[index].id)
-            
+            // MAIS et c'est important pour le meilleur film placé tout en haut, il faut uniquement remplacer les url
+            // et id des img quand celles-ci sont dans la bonne liste de div
+            current_imgs[index].src=`${img_url}`
+            current_imgs[index].id=`${img_id}`
         }
         
     } else if (BestRatedPage === 1) {
