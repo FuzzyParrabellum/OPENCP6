@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="fr">
     <head>
         <link href="./style.css" type="text/css" rel="stylesheet">
-        
+        <meta charset="UTF-8">
+        <title>JustStreamIt</title>
     </head>
     <body>
         <header>
@@ -18,13 +19,7 @@
                 <div id="BestMovie">
                     <div class="MovieInformations">
                         <div class="BestMovieTitle"><h1 id="titleToReplace">BestMovie Title</h1></div>
-                        <button class="PlayButton" id="BMPlayButton"><h2>Play</h2></button>
-                    </div>
-                </div>
-                <div class="modal" id="modalBestMovie">
-                    <div id="modalBestMovieContent">
-                        <span class="close">&times;</span>
-                        <p>Le text présent dans la modale</p>   
+                        <button class="PlayButton" id="BMPlayButton">Play</button>
                     </div>
                 </div>
             </section>
@@ -77,11 +72,11 @@
                 </div>
             </section>
         </main>
-    </body>
-    <script type="text/javascript" src="./interactivity.js"></script> 
-    <!-- si ce script n'est pas placé après body, les document.getElementById dans interactivity.js 
-        ne fonctionnent pas -->
     <footer>
         <div>Informations concernant le site</div>
     </footer>
+    <script src="./interactivity.js"></script> 
+    <!-- si ce script n'est pas placé après body, les document.getElementById dans interactivity.js 
+        ne fonctionnent pas -->
+    </body>
 </html>
