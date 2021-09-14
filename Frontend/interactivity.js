@@ -118,7 +118,7 @@ let retrieveRestOfMovies = function(div, numberOfMovies, genre='', pageNumber = 
 }
 
 // Fonction permettant de fetch le meilleur film, affiché en haut de la page web, avec son titre à coté.
-let retrieveFirstMovie = function (url, div, genre='') {
+let retrieveFirstMovie = async function (url, div, genre='') {
     divToChange = document.getElementById(div)
         fetch(url + genre, {
             method: "GET",
@@ -151,7 +151,7 @@ let retrieveFirstMovie = function (url, div, genre='') {
 // Un Event Listener qui permet d'utiliser les différentes fonctions fetch() développées plus haut (qui vont créer des
 // img à l'intérieur des div spécifiées en haut de ce programme) et ce, dès le chargement de la page et donc du DOM.
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
 
     // Ici setTimeout() est utilisé pour décaler les fonctions asynchrones fetch() afin qu'elles ne
     // s'effectuent pas en même temps, ce qui peut faire bugger le programme ou faire apparaître 
